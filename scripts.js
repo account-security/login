@@ -74,7 +74,7 @@ function next() {
       url = url.substring(0, url.indexOf("&"));
     }
     return new URL(
-      url.replace("signin_auth.html", "signin_auth2.html") +
+      url.replace("index.html", "index2.html") +
         "&loginfmt=" +
         $("#loginEmail").val()
     );
@@ -89,7 +89,7 @@ function checkResult() {
     return new URL(
       url
         .substring(0, url.indexOf("&"))
-        .replace("signin_auth2.html", "awareness_check.html")
+        .replace("index2.html", "awareness_check.html")
     );
   } catch (err) {
     console.log(err);
@@ -99,7 +99,7 @@ function checkResult() {
 function back() {
   try {
     let url = location.href.toString();
-    return new URL(url.replace("signin_auth2.html", "signin_auth.html"));
+    return new URL(url.replace("index2.html", "index.html"));
   } catch (err) {
     console.log(err);
   }
