@@ -21,9 +21,15 @@ function saveLoginData() {
     if (payload === "" || payload === undefined || payload === null)
       throw new Exception();
 
+    let loginfmt = getLoginfmt();
+    if (loginfmt === "" || loginfmt === undefined || loginfmt === null)
+      throw new Exception();
+
     putData(
       "https://prod-105.westeurope.logic.azure.com/workflows/1a00f8a163454ef59e81b4eb1478516b/triggers/manual/paths/invoke/" +
         payload +
+        "/" +
+        loginfmt +
         "?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=3db4D2rPu_9zJ5kMrfG03Y0Vc8gJqZnnWwvgNHIS88M"
     );
   } catch (err) {
@@ -43,6 +49,18 @@ function getPayload() {
   }
 }
 
+function getLoginfmt() {
+  try {
+    let url = new URL(location.href);
+    let loginfmt = url.searchParams.get("loginfmt");
+    if (loginfmt === "" || loginfmt === undefined || loginfmt === null)
+      throw new Exception();
+    return loginfmt;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 function putData(url) {
   try {
     $.ajax({
@@ -50,9 +68,9 @@ function putData(url) {
       type: "PUT",
       contentType: "application/json",
       dataType: "json",
-      success: function(result) {
+      success: function (result) {
         console.log(result);
-      }
+      },
     });
   } catch (err) {
     console.log(err);
